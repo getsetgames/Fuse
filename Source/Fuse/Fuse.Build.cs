@@ -61,27 +61,7 @@ namespace UnrealBuildTool.Rules
 				);
 
 			if (Target.Platform == UnrealTargetPlatform.IOS) {
-				ConfigCacheIni Ini = new ConfigCacheIni(UnrealTargetPlatform.IOS, "Engine", UnrealBuildTool.GetUProjectPath());
-				
-				bool bIncludeAdColony = false;
-				bool bIncludeAppLovin = false;
-				bool bIncludeHyprMX = false;
-				bool bIncludeAdMob = false;
-				bool bIncludeChartboost = false;
-				bool bIncludeFacebook = false;
-				bool bIncludeiAd = false;
-				bool bIncludeMillennial = false;
-
-				string SettingsPath = "/Script/Fuse.FuseSettings";
-				Ini.GetBool(SettingsPath, "bIncludeAdColony", out bIncludeAdColony);
-				Ini.GetBool(SettingsPath, "bIncludeAppLovin", out bIncludeAppLovin);
-				Ini.GetBool(SettingsPath, "bIncludeHyprMX", out bIncludeHyprMX);
-				Ini.GetBool(SettingsPath, "bIncludeAdMob", out bIncludeAdMob);
-				Ini.GetBool(SettingsPath, "bIncludeChartboost", out bIncludeChartboost);
-				Ini.GetBool(SettingsPath, "bIncludeFacebook", out bIncludeFacebook);
-				Ini.GetBool(SettingsPath, "bIncludeiAd", out bIncludeiAd);
-				Ini.GetBool(SettingsPath, "bIncludeMillennial", out bIncludeMillennial);
-				
+				// required frameworks
 				PublicFrameworks.AddRange(
 					new string[]
 					{
@@ -108,18 +88,40 @@ namespace UnrealBuildTool.Rules
 						"UIKit"
 					}
 				);
-
+				
+				// required libs
 				PublicAdditionalLibraries.Add("sqlite3");
 				PublicAdditionalLibraries.Add("xml2");
 				PublicAdditionalLibraries.Add("z");
-
+				
+				// include Fuse SDK
 				var CodeDir = Path.Combine(ModulePath,"..","..","lib","FuseSDKiOS","Code");
-
 				PrivateIncludePaths.Add(CodeDir);
-
 				PublicAdditionalLibraries.Add(Path.Combine(CodeDir,"libFuseSDK.a"));
 				
-				// optional adapters
+				// collect settings
+				ConfigCacheIni Ini = new ConfigCacheIni(UnrealTargetPlatform.IOS, "Engine", UnrealBuildTool.GetUProjectPath());
+				
+				bool bIncludeAdColony = false;
+				bool bIncludeAppLovin = false;
+				bool bIncludeHyprMX = false;
+				bool bIncludeAdMob = false;
+				bool bIncludeChartboost = false;
+				bool bIncludeFacebook = false;
+				bool bIncludeiAd = false;
+				bool bIncludeMillennial = false;
+
+				string SettingsPath = "/Script/Fuse.FuseSettings";
+				Ini.GetBool(SettingsPath, "bIncludeAdColony", out bIncludeAdColony);
+				Ini.GetBool(SettingsPath, "bIncludeAppLovin", out bIncludeAppLovin);
+				Ini.GetBool(SettingsPath, "bIncludeHyprMX", out bIncludeHyprMX);
+				Ini.GetBool(SettingsPath, "bIncludeAdMob", out bIncludeAdMob);
+				Ini.GetBool(SettingsPath, "bIncludeChartboost", out bIncludeChartboost);
+				Ini.GetBool(SettingsPath, "bIncludeFacebook", out bIncludeFacebook);
+				Ini.GetBool(SettingsPath, "bIncludeiAd", out bIncludeiAd);
+				Ini.GetBool(SettingsPath, "bIncludeMillennial", out bIncludeMillennial);
+								
+				// include optional adapters
 				if (bIncludeAdColony)
 				{
 					PublicAdditionalLibraries.Add(Path.Combine(CodeDir,"libFuseAdapterAdcolony.a"));
