@@ -61,6 +61,27 @@ namespace UnrealBuildTool.Rules
 				);
 
 			if (Target.Platform == UnrealTargetPlatform.IOS) {
+				ConfigCacheIni Ini = new ConfigCacheIni(UnrealTargetPlatform.IOS, "Engine", UnrealBuildTool.GetUProjectPath());
+				
+				bool bIncludeAdColony = false;
+				bool bIncludeAppLovin = false;
+				bool bIncludeHyprMX = false;
+				bool bIncludeAdMob = false;
+				bool bIncludeChartboost = false;
+				bool bIncludeFacebook = false;
+				bool bIncludeiAd = false;
+				bool bIncludeMillennial = false;
+
+				string SettingsPath = "/Script/Fuse.FuseSettings";
+				Ini.GetBool(SettingsPath, "bIncludeAdColony", out bIncludeAdColony);
+				Ini.GetBool(SettingsPath, "bIncludeAppLovin", out bIncludeAppLovin);
+				Ini.GetBool(SettingsPath, "bIncludeHyprMX", out bIncludeHyprMX);
+				Ini.GetBool(SettingsPath, "bIncludeAdMob", out bIncludeAdMob);
+				Ini.GetBool(SettingsPath, "bIncludeChartboost", out bIncludeChartboost);
+				Ini.GetBool(SettingsPath, "bIncludeFacebook", out bIncludeFacebook);
+				Ini.GetBool(SettingsPath, "bIncludeiAd", out bIncludeiAd);
+				Ini.GetBool(SettingsPath, "bIncludeMillennial", out bIncludeMillennial);
+				
 				PublicFrameworks.AddRange(
 					new string[]
 					{
@@ -92,21 +113,87 @@ namespace UnrealBuildTool.Rules
 				PublicAdditionalLibraries.Add("xml2");
 				PublicAdditionalLibraries.Add("z");
 
-				var CodeDir = Path.Combine(ModulePath,"..","..","lib","iOS","Code");
-				//var ExtrasDir = Path.Combine(ModulePath,"..","..","lib","iOS","Extras");
+				var CodeDir = Path.Combine(ModulePath,"..","..","lib","FuseSDKiOS","Code");
 
 				PrivateIncludePaths.Add(CodeDir);
 
 				PublicAdditionalLibraries.Add(Path.Combine(CodeDir,"libFuseSDK.a"));
-				PublicAdditionalLibraries.Add(Path.Combine(CodeDir,"libFuseAdapterAdcolony.a"));
-				PublicAdditionalLibraries.Add(Path.Combine(CodeDir,"libFuseAdapterAppLovin.a"));
-				PublicAdditionalLibraries.Add(Path.Combine(CodeDir,"libFuseAdapterHyprMX.a"));
-
-				//PublicAdditionalLibraries.Add(Path.Combine(ExtrasDir,"AdMob","libFuseAdapterAdMob.a"));
-				//PublicAdditionalLibraries.Add(Path.Combine(ExtrasDir,"ChartBoost","libFuseAdapterChartBoost.a"));
-				//PublicAdditionalLibraries.Add(Path.Combine(ExtrasDir,"Facebook","libFuseAdapterFacebook.a"));
-				//PublicAdditionalLibraries.Add(Path.Combine(ExtrasDir,"iAd","libFuseAdapteriAd.a"));
-				//PublicAdditionalLibraries.Add(Path.Combine(ExtrasDir,"Millennial","libFuseAdapterMillennial.a"));
+				
+				// optional adapters
+				if (bIncludeAdColony)
+				{
+					PublicAdditionalLibraries.Add(Path.Combine(CodeDir,"libFuseAdapterAdcolony.a"));
+				}
+				
+				if (bIncludeAppLovin)
+				{
+					PublicAdditionalLibraries.Add(Path.Combine(CodeDir,"libFuseAdapterAppLovin.a"));
+				}
+				
+				if (bIncludeHyprMX)
+				{
+					PublicAdditionalLibraries.Add(Path.Combine(CodeDir,"libFuseAdapterHyprMX.a"));
+				}
+				
+				var FuseExtrasDir = Path.Combine(ModulePath,"..","..","lib","FuseSDKiOS","Extras");
+				var ExtrasiOSDir = "../../lib/Extras/iOS";
+				
+				if (bIncludeAdMob)
+				{
+					PublicAdditionalLibraries.Add(Path.Combine(FuseExtrasDir,"AdMob","libFuseAdapterAdMob.a"));
+					PublicAdditionalFrameworks.Add(
+						new UEBuildFramework(
+							"GoogleMobileAds",
+							ExtrasiOSDir + "/AdMob/GoogleMobileAds.embeddedframework.zip"
+						)
+					);
+				}
+				
+				if (bIncludeChartboost)
+				{
+					PublicAdditionalLibraries.Add(Path.Combine(FuseExtrasDir,"ChartBoost","libFuseAdapterChartBoost.a"));
+					PublicAdditionalFrameworks.Add(
+						new UEBuildFramework(
+							"Chartboost",
+							ExtrasiOSDir + "/Chartboost/Chartboost.embeddedframework.zip"
+						)
+					);
+				}
+				
+				if (bIncludeFacebook)
+				{
+					PublicAdditionalLibraries.Add(Path.Combine(FuseExtrasDir,"Facebook","libFuseAdapterFacebook.a"));
+					PublicAdditionalFrameworks.Add(
+						new UEBuildFramework(
+							"FBAudienceNetwork",
+							ExtrasiOSDir + "/Facebook/FBAudienceNetwork.embeddedframework.zip"
+						)
+					);
+				}
+				
+				if (bIncludeiAd)
+				{
+					PublicAdditionalLibraries.Add(Path.Combine(FuseExtrasDir,"iAd","libFuseAdapteriAd.a"));
+				}
+				
+				if (bIncludeMillennial)
+				{
+					PublicAdditionalLibraries.Add(Path.Combine(FuseExtrasDir,"Millennial","libFuseAdapterMillennial.a"));
+					PublicAdditionalFrameworks.Add(
+						new UEBuildFramework(
+							"MillennialMedia",
+							ExtrasiOSDir + "/Millennial/MillennialMedia.embeddedframework.zip"
+						)
+					);
+					PublicAdditionalLibraries.Add(Path.Combine(FuseExtrasDir,"AdMob","libFuseAdapterAdMob.a"));
+					PublicAdditionalFrameworks.Add(
+						new UEBuildFramework(
+							"SpeechKit",
+							ExtrasiOSDir + "/Millennial/SpeechKit.embeddedframework.zip"
+						)
+					);
+				}
+				
 			}
 		}
 	}

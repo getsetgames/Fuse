@@ -4,6 +4,8 @@
 //
 
 #include "FusePrivatePCH.h"
+#include "FuseSettings.h"
+#include "ISettingsModule.h"
 
 DEFINE_LOG_CATEGORY(LogFuse);
 
@@ -19,6 +21,15 @@ IMPLEMENT_MODULE( FFuse, Fuse )
 
 void FFuse::StartupModule()
 {
+	// register settings
+	if (ISettingsModule* SettingsModule = FModuleManager::GetModulePtr<ISettingsModule>("Settings"))
+	{
+		SettingsModule->RegisterSettings("Project", "Plugins", "Fuse",
+										 LOCTEXT("RuntimeSettingsName", "Fuse"),
+										 LOCTEXT("RuntimeSettingsDescription", "Configure the Fuse plugin"),
+										 GetMutableDefault<UFuseSettings>()
+										 );
+	}
 }
 
 
