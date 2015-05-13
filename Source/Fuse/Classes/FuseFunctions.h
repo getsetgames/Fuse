@@ -23,8 +23,5 @@ public:
 	static void FuseShowAdForZoneId(FString ZoneId);
 	
 	UFUNCTION(BlueprintCallable, meta = (Keywords = "fuse ad advertising analytics"), Category = "Fuse")
-	static void FuseShowRewardedAdForZoneId(FString ZoneId, bool ShowPreRoll, bool ShowPostRoll, FString PreRollYesButtonText, FString PreRollNoButtonText, FString PostRollContinueButtonText);
-
-	UFUNCTION(BlueprintCallable, meta = (Keywords = "fuse ad advertising analytics"), Category = "Fuse")
 	static void FusePreloadAdForZoneId(FString ZoneId);
 };

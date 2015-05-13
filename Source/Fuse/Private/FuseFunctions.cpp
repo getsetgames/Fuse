@@ -39,23 +39,6 @@ void UFuseFunctions::FuseShowAdForZoneId(FString ZoneId)
 #endif
 }
 
-void UFuseFunctions::FuseShowRewardedAdForZoneId(FString ZoneId, bool ShowPreRoll, bool ShowPostRoll, FString PreRollYesButtonText, FString PreRollNoButtonText, FString PostRollContinueButtonText)
-{
-#if PLATFORM_IOS
-	NSDictionary* Options = @{
-	kFuseRewardedAdOptionKey_ShowPreRoll:@(ShowPreRoll),
-	kFuseRewardedAdOptionKey_ShowPostRoll:@(ShowPostRoll),
-	kFuseRewardedOptionKey_PreRollYesButtonText:PreRollYesButtonText.GetNSString(),
-	kFuseRewardedOptionKey_PreRollNoButtonText:PreRollNoButtonText.GetNSString(),
-	kFuseRewardedOptionKey_PostRollContinueButtonText:PostRollContinueButtonText.GetNSString()
-	};
-	
-	dispatch_sync(dispatch_get_main_queue(), ^{
-		[FuseSDK showAdForZoneID:ZoneId.GetNSString() options:Options];
-	});
-#endif
-}
-
 void UFuseFunctions::FusePreloadAdForZoneId(FString ZoneId)
 {
 #if PLATFORM_IOS
