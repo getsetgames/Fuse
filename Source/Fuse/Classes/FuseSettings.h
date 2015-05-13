@@ -38,4 +38,10 @@ public:
 
 	UPROPERTY(Config, EditAnywhere, Category=Adapters, meta=(DisplayName="Include Millennial"))
 	bool bIncludeMillennial;
+	
+	UPROPERTY(Config, EditAnywhere, Category=General, meta=(DisplayName="Register for Push on Session Start"))
+	bool bRegisterForPush;
+
+	UPROPERTY(Config, EditAnywhere, Category=General, meta=(DisplayName="Disable Crash Reporting"))
+	bool bDisableCrashReporting;
 };

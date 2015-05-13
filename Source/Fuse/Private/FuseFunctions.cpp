@@ -14,9 +14,15 @@ static FuseDelegateImpl* FuseDelegateImplSingleton = [[FuseDelegateImpl alloc] i
 
 void UFuseFunctions::FuseStartSession(FString AppId)
 {
+	const UFuseSettings* DefaultSettings = GetDefault<UFuseSettings>();
+
 #if PLATFORM_IOS
 	dispatch_sync(dispatch_get_main_queue(), ^{
-		[FuseSDK startSession:AppId.GetNSString() delegate:FuseDelegateImplSingleton withOptions:nil];
+		NSDictionary* options = @{
+			kFuseSDKOptionKey_RegisterForPush : @(DefaultSettings->bRegisterForPush),
+			kFuseSDKOptionKey_DisableCrashReporting : @(DefaultSettings->bDisableCrashReporting),
+		};
+		[FuseSDK startSession:AppId.GetNSString() delegate:FuseDelegateImplSingleton withOptions:options];
 	});
 #endif
 }

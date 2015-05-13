@@ -16,6 +16,8 @@ UFuseSettings::UFuseSettings(const FObjectInitializer& ObjectInitializer)
 , bIncludeFacebook(false)
 , bIncludeiAd(false)
 , bIncludeMillennial(false)
+, bRegisterForPush(true)
+, bDisableCrashReporting(false)
 {
 	
 }
