@@ -1,0 +1,3 @@
+[submodule "lib/iOS"]
+	path = lib/iOS
+	url = git@github.com:getsetgames/FuseSDKiOS.git
