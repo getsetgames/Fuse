@@ -32,21 +32,21 @@ namespace EBPFuseGender {
 	};
 }
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFuseRewardedObject
 {
 	GENERATED_USTRUCT_BODY()
 	
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, Category=Fuse)
 	FString PreRollMessage;
 	
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, Category=Fuse)
 	FString RewardMessage;
 	
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, Category=Fuse)
 	FString RewardItem;
 	
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, Category=Fuse)
 	int32 RewardAmount;
 	
 	FFuseRewardedObject()
@@ -67,21 +67,21 @@ struct FFuseRewardedObject
 	}
 };
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFuseIAPOfferObject
 {
 	GENERATED_USTRUCT_BODY()
 	
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, Category=Fuse)
 	FString ProductId;
 	
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, Category=Fuse)
 	float ProductPrice;
 	
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, Category=Fuse)
 	FString ItemName;
 	
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, Category=Fuse)
 	int32 ItemAmount;
 	
 	FFuseIAPOfferObject()
@@ -102,21 +102,21 @@ struct FFuseIAPOfferObject
 	}
 };
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFuseVirtualGoodsOfferObject
 {
 	GENERATED_USTRUCT_BODY()
 	
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, Category=Fuse)
 	FString PurchaseCurrency;
 	
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, Category=Fuse)
 	float PurchasePrice;
 	
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, Category=Fuse)
 	FString ItemName;
 	
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, Category=Fuse)
 	int32 ItemAmount;
 	
 	FFuseVirtualGoodsOfferObject()
