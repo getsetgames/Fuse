@@ -54,6 +54,28 @@ void UFuseFunctions::FusePreloadAdForZoneId(FString ZoneId)
 #endif
 }
 
+void UFuseFunctions::FuseRegisterInAppPurchase(EInAppPurchaseState::Type PurchaseState, FInAppPurchaseProductInfo PurchaseInfo)
+{
+#if PLATFORM_IOS
+	dispatch_sync(dispatch_get_main_queue(), ^{
+		NSData* ReceiptData = [[[NSData alloc] initWithBase64EncodedString:PurchaseInfo.ReceiptData.GetNSString() options:NSDataBase64EncodingEndLineWithLineFeed] autorelease];
+		NSInteger TransactionState = PurchaseState == EInAppPurchaseState::Success ? SKPaymentTransactionStatePurchased : SKPaymentTransactionStateFailed;
+		NSString* CurrencyCode = [[NSLocale currentLocale] objectForKey:NSLocaleCurrencyCode];
+		NSString* CurrencySymbol = [[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol];
+		NSString* Price = [PurchaseInfo.DisplayPrice.GetNSString() stringByReplacingOccurrencesOfString:CurrencySymbol withString:@""];
+		
+		//UE_LOG(LogFuse, Log, TEXT("ReceiptData: %s, Purchase State: %i, Price: %s, Currency Code: %s, Purchase Identifier: %s, Transaction Identifier: %s"), *PurchaseInfo.ReceiptData, TransactionState, *FString(Price), *FString(CurrencyCode), *PurchaseInfo.Identifier, *PurchaseInfo.TransactionIdentifier);
+
+		[FuseSDK registerInAppPurchase:ReceiptData
+							   TxState:TransactionState
+								 Price:Price
+							  Currency:CurrencyCode
+							 ProductID:PurchaseInfo.Identifier.GetNSString()
+						 TransactionID:PurchaseInfo.TransactionIdentifier.GetNSString()];
+	});
+#endif
+}
+
 #if PLATFORM_IOS
 @implementation FuseDelegateImpl
 

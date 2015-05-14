@@ -7,6 +7,7 @@
 
 #include "CoreUObject.h"
 #include "Engine.h"
+#include "OnlineStoreInterface.h"
 
 #include "IFuse.h"
 
