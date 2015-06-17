@@ -1,21 +1,23 @@
 {
-	"FileVersion" : 3,
-
-	"FriendlyName" : "Fuse",
-	"Version" : 1,
-	"VersionName" : "1.0",
-	"CreatedBy" : "Get Set Games Inc.",
-	"CreatedByURL" : "https://github.com/getsetgames/Fuse",
-	"EngineVersion" : "4.7.0",
-	"Description" : "This plugin adds support for the Fuse SDK.",
-	"Category" : "Developer",
-	"EnabledByDefault" : false,
-
-	"Modules" :
-	[
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "Fuse",
+	"Description": "This plugin adds support for the Fuse SDK.",
+	"Category": "Advertising",
+	"CreatedBy": "Get Set Games Inc.",
+	"CreatedByURL": "http://getsetgames.com",
+	"DocsURL": "https://github.com/getsetgames/Fuse",
+	"MarketplaceURL": "",
+	"Modules": [
 		{
-			"Name" : "Fuse",
-			"Type" : "Runtime"
+			"Name": "Fuse",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
 		}
-	]
+	],
+	"EnabledByDefault": false,
+	"CanContainContent": false,
+	"IsBetaVersion": false,
+	"Installed": false
 }
