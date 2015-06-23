@@ -17,7 +17,7 @@ void UFuseFunctions::FuseStartSession(FString AppId)
 	const UFuseSettings* DefaultSettings = GetDefault<UFuseSettings>();
 
 #if PLATFORM_IOS
-	dispatch_sync(dispatch_get_main_queue(), ^{
+	dispatch_async(dispatch_get_main_queue(), ^{
 		NSDictionary* options = @{
 			kFuseSDKOptionKey_RegisterForPush : @(DefaultSettings->bRegisterForPush),
 			kFuseSDKOptionKey_DisableCrashReporting : @(DefaultSettings->bDisableCrashReporting),
@@ -39,7 +39,7 @@ bool UFuseFunctions::FuseIsAdAvailableForZoneId(FString ZoneId)
 void UFuseFunctions::FuseShowAdForZoneId(FString ZoneId)
 {
 #if PLATFORM_IOS
-	dispatch_sync(dispatch_get_main_queue(), ^{
+	dispatch_async(dispatch_get_main_queue(), ^{
 		[FuseSDK showAdForZoneID:ZoneId.GetNSString() options:nil];
 	});
 #endif
@@ -48,7 +48,7 @@ void UFuseFunctions::FuseShowAdForZoneId(FString ZoneId)
 void UFuseFunctions::FusePreloadAdForZoneId(FString ZoneId)
 {
 #if PLATFORM_IOS
-	dispatch_sync(dispatch_get_main_queue(), ^{
+	dispatch_async(dispatch_get_main_queue(), ^{
 		[FuseSDK preloadAdForZoneID:ZoneId.GetNSString()];
 	});
 #endif
@@ -57,7 +57,7 @@ void UFuseFunctions::FusePreloadAdForZoneId(FString ZoneId)
 void UFuseFunctions::FuseRegisterInAppPurchase(EInAppPurchaseState::Type PurchaseState, FInAppPurchaseProductInfo PurchaseInfo)
 {
 #if PLATFORM_IOS
-	dispatch_sync(dispatch_get_main_queue(), ^{
+	dispatch_async(dispatch_get_main_queue(), ^{
 		NSData* ReceiptData = [[[NSData alloc] initWithBase64EncodedString:PurchaseInfo.ReceiptData.GetNSString() options:NSDataBase64EncodingEndLineWithLineFeed] autorelease];
 		NSInteger TransactionState = PurchaseState == EInAppPurchaseState::Success ? SKPaymentTransactionStatePurchased : SKPaymentTransactionStateFailed;
 		NSString* CurrencyCode = [[NSLocale currentLocale] objectForKey:NSLocaleCurrencyCode];
