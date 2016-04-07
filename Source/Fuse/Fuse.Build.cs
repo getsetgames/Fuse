@@ -9,11 +9,6 @@ namespace UnrealBuildTool.Rules
 {
 	public class Fuse : ModuleRules
 	{
-		private string ModulePath
-		{
-			get { return Path.GetDirectoryName( RulesCompiler.GetModuleFilename( this.GetType().Name ) ); }
-		}
-
 		public Fuse(TargetInfo Target)
 		{
 			PublicIncludePaths.AddRange(
@@ -96,12 +91,12 @@ namespace UnrealBuildTool.Rules
 				PublicAdditionalLibraries.Add("z");
 				
 				// include Fuse SDK
-				var CodeDir = Path.Combine(ModulePath,"..","..","lib","FuseSDKiOS","Code");
+				var CodeDir = Path.Combine(ModuleDirectory,"..","..","lib","FuseSDKiOS","Code");
 				PrivateIncludePaths.Add(CodeDir);
 				PublicAdditionalLibraries.Add(Path.Combine(CodeDir,"libFuseSDK.a"));
 				
 				// collect settings
-				ConfigCacheIni Ini = new ConfigCacheIni(UnrealTargetPlatform.IOS, "Engine", UnrealBuildTool.GetUProjectPath());
+				ConfigCacheIni Ini = new ConfigCacheIni(UnrealTargetPlatform.IOS, "Engine", null);
 				
 				bool bIncludeAdColony = false;
 				bool bIncludeAppLovin = false;
@@ -138,7 +133,7 @@ namespace UnrealBuildTool.Rules
 					PublicAdditionalLibraries.Add(Path.Combine(CodeDir,"libFuseAdapterHyprMX.a"));
 				}
 				
-				var FuseExtrasDir = Path.Combine(ModulePath,"..","..","lib","FuseSDKiOS","Extras");
+				var FuseExtrasDir = Path.Combine(ModuleDirectory,"..","..","lib","FuseSDKiOS","Extras");
 				var ExtrasiOSDir = "../../lib/Extras/iOS";
 				
 				if (bIncludeAdMob)
