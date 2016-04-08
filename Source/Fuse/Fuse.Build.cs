@@ -96,7 +96,7 @@ namespace UnrealBuildTool.Rules
 				PublicAdditionalLibraries.Add(Path.Combine(CodeDir,"libFuseSDK.a"));
 				
 				// collect settings
-				ConfigCacheIni Ini = new ConfigCacheIni(UnrealTargetPlatform.IOS, "Engine", null);
+				ConfigCacheIni Ini = new ConfigCacheIni(UnrealTargetPlatform.IOS, "Engine", (DirectoryReference)null);
 				
 				bool bIncludeAdColony = false;
 				bool bIncludeAppLovin = false;
